@@ -22,7 +22,7 @@ public class TestController {
         ToDoListEntity item2 = new ToDoListEntity();
         item2.setId(2);
         item2.setTodo("청소하기");
-        item2.setCheck(false);
+        item2.setCheck(false); 
 
         List<ToDoListEntity> list = new ArrayList<>();
         list.add(item1);
