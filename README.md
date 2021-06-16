@@ -1,5 +1,4 @@
 ## HEBE-Spring
-***
 #### Record
 > ##### 21.06.16
 > ■ repository 생성
