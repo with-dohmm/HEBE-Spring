@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.hebe.mapper.MainMapper">
-    <select id="selPopularList" resultType="MainDomain">
+    <select id="selPopularList" resultType="CardDomain">
         select A.iboard, A.title, A.iuser, A.regdt, A.thumbnail, B.favCnt, C.uid, C.unm
         from diaryDB A
         LEFT JOIN (
@@ -16,7 +16,7 @@
         ORDER BY B.favCnt DESC
     </select>
 
-    <select id="selRecentList" resultType="MainDomain">
+    <select id="selRecentList" resultType="CardDomain">
         select A.iboard, A.title, A.iuser, A.regdt, A.thumbnail, B.favCnt, C.uid, C.unm
         from diaryDB A
         LEFT JOIN (
@@ -27,5 +27,11 @@
         LEFT JOIN userDB C
         ON A.iuser = C.iuser
         ORDER BY A.iboard desc
+    </select>
+
+    <select id="searchUser" resultType="UserEntity">
+        select uid, profileImg
+        from userDB
+        where uid = #{uid}
     </select>
 </mapper>
