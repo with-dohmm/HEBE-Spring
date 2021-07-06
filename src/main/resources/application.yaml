@@ -4,7 +4,24 @@ spring:
     username: root
     password: 1234
     driver-class-name: org.mariadb.jdbc.Driver
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: hebenote.com@gmail.com
+    password: sweetgirl3!
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 
 mybatis:
   mapper-locations: mybatis-mapper/**/*.xml
   type-aliases-package: com.hebe
+
+server:
+  port: 8080
+
+jwt:
+  secret: jwtsecretkey

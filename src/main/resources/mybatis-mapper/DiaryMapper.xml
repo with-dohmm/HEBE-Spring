@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hebe.mapper.DiaryMapper">
+    <select id="selUserDiary" resultType="CardDomain">
+        select A.iboard, A.title, A.iuser, A.regdt, A.thumbnail, B.favCnt, C.email, C.unm
+        from diaryDB A
+            LEFT JOIN (
+            SELECT iboard, count(iboard) as favCnt FROM favDB
+            GROUP BY iboard
+        ) B
+        ON A.iboard = B.iboard
+        LEFT JOIN userDB C
+        ON A.iuser = C.iuser
+        WHERE C.email = #{email}
+        ORDER BY A.iboard desc
+    </select>
+
+    <insert id="writeDiary">
+        insert into diaryDB
+        (title, content, iuser, thumbnail)
+        values
+        (#{title}, #{content}, #{iuser}, #{thumbnail});
+    </insert>
+
+    <select id="detailDiary" resultType="DiaryEntity">
+        select A.title, A.content, B.unm
+        from diaryDB A
+        inner join userDB B
+        on A.iuser = B.iuser
+        where A.iboard = #{iboard}
+    </select>
+</mapper>
