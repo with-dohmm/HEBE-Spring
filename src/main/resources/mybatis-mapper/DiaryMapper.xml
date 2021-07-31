@@ -4,31 +4,89 @@
 
 <mapper namespace="com.hebe.mapper.DiaryMapper">
     <select id="selUserDiary" resultType="CardDomain">
-        select A.iboard, A.title, A.iuser, A.regdt, A.thumbnail, B.favCnt, C.uid, C.unm
+        select A.iboard, A.title, A.iuser, date_format(A.regdt, '%Y-%m-%d') as regdt, A.thumbnail, B.favCnt, C.username, C.nickname
         from diaryDB A
-            LEFT JOIN (
-            SELECT iboard, count(iboard) as favCnt FROM favDB
+        LEFT JOIN (
+            SELECT iboard, count(iboard) as favCnt
+            FROM favDB
             GROUP BY iboard
         ) B
         ON A.iboard = B.iboard
         LEFT JOIN userDB C
         ON A.iuser = C.iuser
-        WHERE C.uid = #{uid}
+        WHERE C.iuser = #{iuser}
         ORDER BY A.iboard desc
     </select>
 
-    <insert id="writeDiary">
+    <insert id="preWriteDiary">
         insert into diaryDB
-        (title, content, iuser, thumbnail)
+            (title, content, iuser, thumbnail)
         values
-        (#{title}, #{content}, #{iuser}, #{thumbnail});
+            (#{title}, #{content}, #{iuser}, #{thumbnail});
     </insert>
 
-    <select id="detailDiary" resultType="DiaryEntity">
-        select A.title, A.content, B.unm
+    <select id="getMostRecent" resultType="DiaryEntity">
+        select * from diaryDB ORDER BY iboard DESC LIMIT 1;
+    </select>
+
+    <update id="writeDiary">
+        update diaryDB
+        set title = #{title}, content = #{content}, thumbnail = #{thumbnail}
+        where iboard = #{iboard}
+    </update>
+
+    <delete id="deleteDiary">
+        delete from diaryDB
+        where iboard = #{iboard} and iuser = #{iuser}
+    </delete>
+
+    <select id="detailDiary" resultType="DetailDomain">
+        select A.iuser, A.title, A.content, date_format(A.regdt, '%Y-%m-%d') as regdt, B.profileImg, B.nickname, B.introduction, (
+            select count(*)
+            from favDB
+            where iboard = #{iboard} and iuser = #{iuser}
+        ) as isFav
         from diaryDB A
         inner join userDB B
         on A.iuser = B.iuser
         where A.iboard = #{iboard}
     </select>
+
+    <select id="cmtList" resultType="CmtDomain">
+        select A.icmt, A.comment, A.iboard, A.iuser, date_format(A.regdt, '%Y-%m-%d') as regdt, B.profileImg, B.nickname, B.introduction
+        from cmtDB A
+        inner join userDB B
+        on A.iuser = B.iuser
+        where iboard = #{iboard}
+    </select>
+
+    <insert id="cmtWrite">
+        insert into cmtDB
+            (comment, iboard, iuser, thumbnail)
+        values
+            (#{comment}, #{iboard}, #{iuser}, #{thumbnail})
+    </insert>
+
+    <delete id="cmtDelete">
+        delete from cmtDB
+        where icmt = #{icmt} and iuser = #{iuser}
+    </delete>
+
+    <update id="cmtUpdate">
+        update cmtDB
+        set comment = #{comment}
+        where icmt = #{icmt} and iuser = #{iuser}
+    </update>
+
+    <insert id="addFav">
+        insert into favDB
+            (iuser, iboard)
+        values
+            (#{iuser}, #{iboard})
+    </insert>
+
+    <delete id="removeFav">
+        delete from favDB
+        where iuser = #{iuser} and iboard = #{iboard}
+    </delete>
 </mapper>
