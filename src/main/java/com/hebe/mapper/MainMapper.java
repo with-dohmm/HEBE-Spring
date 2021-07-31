@@ -1,7 +1,8 @@
 package com.hebe.mapper;
 
+import com.hebe.jwt.model.UserEntity;
 import com.hebe.vo.CardDomain;
-import com.hebe.vo.UserEntity;
+import com.hebe.vo.MainDomain;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -17,4 +18,7 @@ public interface MainMapper {
 
     // 유저 검색
     UserEntity searchUser(UserEntity param);
+
+    // 유저 검색(리스트)
+    List<UserEntity> searchUserList(UserEntity param);
 }

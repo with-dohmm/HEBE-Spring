@@ -1,8 +1,9 @@
 package com.hebe.service;
 
+import com.hebe.jwt.model.UserEntity;
 import com.hebe.mapper.MainMapper;
 import com.hebe.vo.CardDomain;
-import com.hebe.vo.UserEntity;
+import com.hebe.vo.MainDomain;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,4 +28,6 @@ public class MainService {
         return MainMapper.searchUser(param);
     }
 
+    // 유저 검색(리스트)
+    public List<UserEntity> searchUserList(UserEntity param) { return MainMapper.searchUserList(param); }
 }

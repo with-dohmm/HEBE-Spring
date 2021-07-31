@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hebe.mapper.MyFavMapper">
+    <select id="getMyFav" resultType="CardDomain">
+        select A.iboard, A.title, A.iuser, date_format(A.regdt, '%Y-%m-%d') as regdt, A.thumbnail, B.favCnt, C.username, C.nickname
+        from diaryDB A
+        INNER JOIN (
+            SELECT iboard, count(iboard) as favCnt
+            FROM favDB
+            GROUP BY iboard
+        ) B
+        ON A.iboard = B.iboard
+        INNER JOIN userDB C
+        ON A.iuser = C.iuser
+        INNER JOIN favDB D
+        ON A.iboard = D.iboard
+        WHERE D.iuser = #{iuser}
+        ORDER BY B.favCnt DESC
+    </select>
+</mapper>

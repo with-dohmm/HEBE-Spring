@@ -7,8 +7,9 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class CardDomain extends DiaryEntity {
-    private int favCnt;
+public class DetailDomain extends DiaryEntity {
     private String nickname;
-    private String username;
+    private String introduction;
+    private String profileImg;
+    private int isFav;
 }

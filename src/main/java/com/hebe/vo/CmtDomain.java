@@ -7,12 +7,8 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class UserEntity {
-
-    private int iuser;
-    private String uid;
-    private String upw;
-    private String unm;
+public class CmtDomain extends CmtEntity {
     private String profileImg;
+    private String nickname;
     private String introduction;
 }

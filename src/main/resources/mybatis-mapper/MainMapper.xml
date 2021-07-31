@@ -4,20 +4,20 @@
 
 <mapper namespace="com.hebe.mapper.MainMapper">
     <select id="selPopularList" resultType="CardDomain">
-        select A.iboard, A.title, A.iuser, A.regdt, A.thumbnail, B.favCnt, C.uid, C.unm
+        select A.iboard, A.title, A.iuser, date_format(A.regdt, '%Y-%m-%d') as regdt, A.thumbnail, B.favCnt, C.username, C.nickname
         from diaryDB A
         LEFT JOIN (
             SELECT iboard, count(iboard) as favCnt FROM favDB
             GROUP BY iboard
         ) B
         ON A.iboard = B.iboard
-        LEFT JOIN userDB C
-        ON A.iuser = C.iuser
+            LEFT JOIN userDB C
+            ON A.iuser = C.iuser
         ORDER BY B.favCnt DESC
     </select>
 
     <select id="selRecentList" resultType="CardDomain">
-        select A.iboard, A.title, A.iuser, A.regdt, A.thumbnail, B.favCnt, C.uid, C.unm
+        select A.iboard, A.title, A.iuser, date_format(A.regdt, '%Y-%m-%d') as regdt, A.thumbnail, B.favCnt, C.username, C.nickname
         from diaryDB A
         LEFT JOIN (
             SELECT iboard, count(iboard) as favCnt FROM favDB
@@ -30,8 +30,14 @@
     </select>
 
     <select id="searchUser" resultType="UserEntity">
-        select uid, profileImg
+        select iuser, username, nickname, profileImg
         from userDB
-        where uid = #{uid}
+        where nickname like CONCAT('%', #{nickname}, '%')
+    </select>
+
+    <select id="searchUserList" resultType="UserEntity">
+        select iuser, username, nickname, profileImg, introduction
+        from userDB
+        where nickname like CONCAT('%', #{nickname}, '%')
     </select>
 </mapper>
