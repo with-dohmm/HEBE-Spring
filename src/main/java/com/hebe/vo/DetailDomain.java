@@ -10,6 +10,6 @@ import lombok.ToString;
 public class DetailDomain extends DiaryEntity {
     private String nickname;
     private String introduction;
-    private String profileImg;
+    private String profileimg;
     private int isFav;
 }

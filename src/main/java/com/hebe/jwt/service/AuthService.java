@@ -45,6 +45,8 @@ public class AuthService {
     public void join(UserEntity user) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setProfileimg("/img/common/basic_profile.png");
+        user.setIntroduction("한 줄 소개");
         userRepository.save(user);
     }
 

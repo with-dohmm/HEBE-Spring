@@ -25,6 +25,7 @@ public class DiaryService {
     public int preWriteDiary(DiaryEntity param) {
         // 임의의 글 생성, 결과 담아둠
         int result = DiaryMapper.preWriteDiary(param);
+        System.out.println("result : " + result);
 
         // 유저 - iboard 이미지 폴더 생성
         int recentIboard = DiaryMapper.getMostRecent().getIboard();
@@ -41,7 +42,7 @@ public class DiaryService {
 
     // 이미지 업로드 - 글쓰기 (write)
     public String uploadImage(MultipartFile img, int iboard, int iuser) {
-        String ext = FilenameUtils.getExtension((img.getOriginalFilename()));
+        String ext = FilenameUtils.getExtension(img.getOriginalFilename());
         String fileNm = UUID.randomUUID().toString() + "." + ext;
 
         int temp = iboard;  // 기존 글에 새로 이미지를 추가할 경우 => 기존 폴더(iboard)에 추가
@@ -61,7 +62,7 @@ public class DiaryService {
 
     // 글 작성 취소
     public int cancelDiary(DiaryEntity param) {
-        File target = new File("C:/Users/82109/Desktop/project/hebe-react/public/img/1/" + param.getIboard());
+        File target = new File("C:/Users/82109/Desktop/project/hebe-react/public/img/" + param.getIuser() + param.getIboard());
         if (target.exists()) {
             File[] imgList = target.listFiles();
             for (int i = 0; i< imgList.length; i++) {

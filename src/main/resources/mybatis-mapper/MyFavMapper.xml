@@ -4,7 +4,7 @@
 
 <mapper namespace="com.hebe.mapper.MyFavMapper">
     <select id="getMyFav" resultType="CardDomain">
-        select A.iboard, A.title, A.iuser, date_format(A.regdt, '%Y-%m-%d') as regdt, A.thumbnail, B.favCnt, C.username, C.nickname
+        select A.iboard, A.title, A.iuser, date_format(A.regdt, '%Y-%m-%d') as regdt, A.thumbnail, B.favCnt, C.username, C.nickname, C.profileimg
         from diaryDB A
         INNER JOIN (
             SELECT iboard, count(iboard) as favCnt

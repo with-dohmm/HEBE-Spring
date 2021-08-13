@@ -4,7 +4,7 @@
 
 <mapper namespace="com.hebe.mapper.DiaryMapper">
     <select id="selUserDiary" resultType="CardDomain">
-        select A.iboard, A.title, A.iuser, date_format(A.regdt, '%Y-%m-%d') as regdt, A.thumbnail, B.favCnt, C.username, C.nickname
+        select A.iboard, A.title, A.iuser, date_format(A.regdt, '%Y-%m-%d') as regdt, A.thumbnail, B.favCnt, C.username, C.nickname, C.profileimg
         from diaryDB A
         LEFT JOIN (
             SELECT iboard, count(iboard) as favCnt
@@ -20,9 +20,9 @@
 
     <insert id="preWriteDiary">
         insert into diaryDB
-            (title, content, iuser, thumbnail)
+            (title, content, iuser )
         values
-            (#{title}, #{content}, #{iuser}, #{thumbnail});
+            (#{title}, #{content}, #{iuser});
     </insert>
 
     <select id="getMostRecent" resultType="DiaryEntity">
@@ -31,7 +31,7 @@
 
     <update id="writeDiary">
         update diaryDB
-        set title = #{title}, content = #{content}, thumbnail = #{thumbnail}
+        set iuser = #{iuser}, title = #{title}, content = #{content}, thumbnail = #{thumbnail}
         where iboard = #{iboard}
     </update>
 
@@ -41,7 +41,7 @@
     </delete>
 
     <select id="detailDiary" resultType="DetailDomain">
-        select A.iuser, A.title, A.content, date_format(A.regdt, '%Y-%m-%d') as regdt, B.profileImg, B.nickname, B.introduction, (
+        select A.iuser, A.title, A.content, date_format(A.regdt, '%Y-%m-%d') as regdt, B.profileimg, B.nickname, B.introduction, (
             select count(*)
             from favDB
             where iboard = #{iboard} and iuser = #{iuser}
@@ -53,7 +53,7 @@
     </select>
 
     <select id="cmtList" resultType="CmtDomain">
-        select A.icmt, A.comment, A.iboard, A.iuser, date_format(A.regdt, '%Y-%m-%d') as regdt, B.profileImg, B.nickname, B.introduction
+        select A.icmt, A.comment, A.iboard, A.iuser, date_format(A.regdt, '%Y-%m-%d') as regdt, B.profileimg, B.nickname, B.introduction
         from cmtDB A
         inner join userDB B
         on A.iuser = B.iuser
@@ -62,9 +62,9 @@
 
     <insert id="cmtWrite">
         insert into cmtDB
-            (comment, iboard, iuser, thumbnail)
+            (comment, iboard, iuser)
         values
-            (#{comment}, #{iboard}, #{iuser}, #{thumbnail})
+            (#{comment}, #{iboard}, #{iuser})
     </insert>
 
     <delete id="cmtDelete">

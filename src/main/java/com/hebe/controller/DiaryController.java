@@ -20,7 +20,12 @@ public class DiaryController {
 
     // 특정 유저 게시글 조회
     @PostMapping("/diary")
-    public List<CardDomain> selUserDiary(UserEntity param) { return DiaryService.selUserDiary(param); }
+    public List<CardDomain> selUserDiary(UserEntity param) {
+        System.out.println("/diary 작동");
+        List<CardDomain> list = DiaryService.selUserDiary(param);
+        System.out.println(list);
+        return list;
+    }
 
     // 글쓰기 버튼 클릭 시 임의의 글 생성 (이미지 폴더 담아두기용)
     @PostMapping("/preWrite")
@@ -39,7 +44,11 @@ public class DiaryController {
 
     // 글 작성
     @PostMapping("/write")
-    public int writeDiary(DiaryEntity param) { return DiaryService.writeDiary(param); }
+    public int writeDiary(DiaryEntity param) {
+        System.out.println("/api/write 작동");
+        System.out.println("iboard : " + param.getIboard());
+        return DiaryService.writeDiary(param);
+    }
 
     // 글 작성 취소
     @PostMapping("/cancel")
