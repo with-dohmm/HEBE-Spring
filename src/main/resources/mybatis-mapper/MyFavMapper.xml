@@ -17,6 +17,7 @@
         INNER JOIN favDB D
         ON A.iboard = D.iboard
         WHERE D.iuser = #{iuser}
+        AND A.title != 'preWrite'
         ORDER BY B.favCnt DESC
     </select>
 </mapper>

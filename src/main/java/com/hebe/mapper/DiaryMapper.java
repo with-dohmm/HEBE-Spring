@@ -12,6 +12,9 @@ public interface DiaryMapper {
     // 특정 유저 게시글 조회
     List<CardDomain> selUserDiary(UserEntity param);
 
+    // 특정 유저 게시글 조회 (페이징)
+    List<CardDomain> selUserDiaryPaging(UserEntity param);
+
     // 글 작성
     int writeDiary(DiaryEntity param);
 

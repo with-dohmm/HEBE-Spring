@@ -12,4 +12,5 @@ public class CardDomain extends DiaryEntity {
     private String nickname;
     private String username;
     private String profileimg;
+    private String introduction;
 }

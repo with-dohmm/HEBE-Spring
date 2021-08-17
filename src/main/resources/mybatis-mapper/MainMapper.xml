@@ -13,6 +13,7 @@
         ON A.iboard = B.iboard
             LEFT JOIN userDB C
             ON A.iuser = C.iuser
+        WHERE A.title != 'preWrite'
         ORDER BY B.favCnt DESC
     </select>
 
@@ -26,6 +27,7 @@
         ON A.iboard = B.iboard
         LEFT JOIN userDB C
         ON A.iuser = C.iuser
+        WHERE A.title != 'preWrite'
         ORDER BY A.iboard desc
     </select>
 

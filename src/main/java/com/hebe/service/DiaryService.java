@@ -21,6 +21,9 @@ public class DiaryService {
     // 특정 유저 게시글 조회
     public List<CardDomain> selUserDiary(UserEntity param) { return DiaryMapper.selUserDiary(param); }
 
+    // 특정 유저 게시글 조회 (페이징)
+    public List<CardDomain> selUserDiaryPaging(UserEntity param) { return DiaryMapper.selUserDiaryPaging(param); }
+
     // 글쓰기 버튼 클릭 시 임의의 글 생성 (이미지 폴더 담아두기용)
     public int preWriteDiary(DiaryEntity param) {
         // 임의의 글 생성, 결과 담아둠
@@ -62,7 +65,7 @@ public class DiaryService {
 
     // 글 작성 취소
     public int cancelDiary(DiaryEntity param) {
-        File target = new File("C:/Users/82109/Desktop/project/hebe-react/public/img/" + param.getIuser() + param.getIboard());
+        File target = new File("C:/Users/82109/Desktop/project/hebe-react/public/img/" + param.getIuser() + "/" + param.getIboard());
         if (target.exists()) {
             File[] imgList = target.listFiles();
             for (int i = 0; i< imgList.length; i++) {
