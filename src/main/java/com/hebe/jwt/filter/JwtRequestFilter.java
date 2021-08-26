@@ -39,14 +39,14 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
-        final Cookie jwtToken = cookieUtil.getCookie(httpServletRequest,JwtUtil.ACCESS_TOKEN_NAME);
+        final Cookie jwtToken = cookieUtil.getCookie(httpServletRequest, JwtUtil.ACCESS_TOKEN_NAME);
 
         String username = null;
         String jwt = null;
         String refreshJwt = null;
         String refreshUname = null;
 
-        try{
+        try {
             if(jwtToken != null){
                 jwt = jwtToken.getValue();
                 username = jwtUtil.getUsername(jwt);
@@ -60,14 +60,14 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                     SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
                 }
             }
-        }catch (ExpiredJwtException e){
+        } catch (ExpiredJwtException e){
             Cookie refreshToken = cookieUtil.getCookie(httpServletRequest,JwtUtil.REFRESH_TOKEN_NAME);
             if(refreshToken!=null){
                 refreshJwt = refreshToken.getValue();
             }
         }
 
-        try{
+        try {
             if(refreshJwt != null){
                 refreshUname = redisUtil.getData(refreshJwt);
 
@@ -86,7 +86,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                 }
             }
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
 
         filterChain.doFilter(httpServletRequest,httpServletResponse);

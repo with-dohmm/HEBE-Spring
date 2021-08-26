@@ -8,7 +8,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class CmtDomain extends CmtEntity {
-    private String profileImg;
+    private String profileimg;
     private String nickname;
     private String introduction;
 }

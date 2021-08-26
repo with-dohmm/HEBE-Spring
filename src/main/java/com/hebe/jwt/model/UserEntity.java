@@ -1,9 +1,9 @@
 package com.hebe.jwt.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 
@@ -11,9 +11,11 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Builder
 @Table(name = "userdb")
 public class UserEntity {
     @Id
+    @Column(length = 10)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int iuser;
 
@@ -30,4 +32,7 @@ public class UserEntity {
 
     @Column(length = 100)
     private String introduction;
+
+    @Column
+    private String provider;
 }

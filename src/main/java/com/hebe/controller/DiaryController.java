@@ -20,7 +20,27 @@ public class DiaryController {
 
     // 특정 유저 게시글 조회
     @PostMapping("/diary")
-    public List<CardDomain> selUserDiary(UserEntity param) { return DiaryService.selUserDiary(param); }
+    public List<CardDomain> selUserDiary(UserEntity param) {
+        System.out.println("/diary 작동");
+        List<CardDomain> list = DiaryService.selUserDiary(param);
+        System.out.println(list);
+        return list;
+    }
+
+    // 특정 유저 게시글 조회 (페이징)
+    @PostMapping("/diary/paging")
+    public List<CardDomain> selUserDiaryPaging(DiaryPagingVO param) {
+        System.out.println("/diary/paging 작동");
+        List<CardDomain> list = DiaryService.selUserDiaryPaging(param);
+        return list;
+    }
+
+    // 검색한 유저 정보 가져오기
+    @PostMapping("/diary/userInfo")
+    public UserEntity selUserInfo(UserEntity param) {
+        UserEntity userInfo = DiaryService.selUserInfo(param);
+        return userInfo;
+    }
 
     // 글쓰기 버튼 클릭 시 임의의 글 생성 (이미지 폴더 담아두기용)
     @PostMapping("/preWrite")
@@ -39,11 +59,18 @@ public class DiaryController {
 
     // 글 작성
     @PostMapping("/write")
-    public int writeDiary(DiaryEntity param) { return DiaryService.writeDiary(param); }
+    public int writeDiary(DiaryEntity param) {
+        System.out.println("/api/write 작동");
+        System.out.println("iboard : " + param.getIboard());
+        return DiaryService.writeDiary(param);
+    }
 
     // 글 작성 취소
     @PostMapping("/cancel")
-    public int cancelDiary(DiaryEntity param) { return DiaryService.cancelDiary(param); }
+    public int cancelDiary(DiaryEntity param) {
+        System.out.println("/api/cancel 작동");
+        return DiaryService.cancelDiary(param);
+    }
 
     // detail 조회
     @PostMapping("/detail")
