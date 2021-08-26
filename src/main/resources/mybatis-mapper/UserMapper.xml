@@ -11,4 +11,11 @@
         SELECT COUNT(*) FROM userdb
         WHERE nickname = #{nickname}
     </select>
+
+    <update id="updUser">
+        UPDATE userdb
+        SET nickname = #{nickname}, introduction = #{introduction}
+        <if test="profileimg != null">, profileimg = #{profileimg}</if>
+        WHERE iuser = ${iuser}
+    </update>
 </mapper>

@@ -24,6 +24,9 @@ public class DiaryService {
     // 특정 유저 게시글 조회 (페이징)
     public List<CardDomain> selUserDiaryPaging(UserEntity param) { return DiaryMapper.selUserDiaryPaging(param); }
 
+    // 검색한 유저 정보 가져오기
+    public UserEntity selUserInfo(UserEntity param) { return DiaryMapper.selUserInfo(param); }
+
     // 글쓰기 버튼 클릭 시 임의의 글 생성 (이미지 폴더 담아두기용)
     public int preWriteDiary(DiaryEntity param) {
         // 임의의 글 생성, 결과 담아둠

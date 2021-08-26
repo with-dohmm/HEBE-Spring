@@ -35,6 +35,13 @@ public class DiaryController {
         return list;
     }
 
+    // 검색한 유저 정보 가져오기
+    @PostMapping("/diary/userInfo")
+    public UserEntity selUserInfo(UserEntity param) {
+        UserEntity userInfo = DiaryService.selUserInfo(param);
+        return userInfo;
+    }
+
     // 글쓰기 버튼 클릭 시 임의의 글 생성 (이미지 폴더 담아두기용)
     @PostMapping("/preWrite")
     public int preWriteDiary(DiaryEntity param) {

@@ -36,6 +36,12 @@
         LIMIT 8 OFFSET #{offsetNum}
     </select>
 
+    <select id="selUserInfo" resultType="UserEntity">
+        select profileimg, nickname, introduction
+        from userDB
+        where iuser = #{iuser}
+    </select>
+
     <insert id="preWriteDiary">
         insert into diaryDB
             (title, content, iuser)

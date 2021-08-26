@@ -20,28 +20,23 @@ spring:
       client:
         registration:
           google:
-            client-id: 472611859560-2eoflemc4li0fnskein1ba18oti5gpao.apps.googleusercontent.com
-            client-secret: ANc526bM8ndagrCh6MKab4Ns
-            scope: # 받을 정보만 적기 ~.~
-              - profile
-              - email
-          facebook:
-            client-id: your-client-id
-            client-secret: your-client-secret
+            client-id: 1032001853934-78dmac7kurqos5r8bpvs9hen0afa8bgv.apps.googleusercontent.com
+            client-secret: oPRqiNcXKA9nUfMxMRYkLRe7
+            scope : email, profile
+
           kakao:
             authorization-grant-type: authorization_code
-            client-id: 024febcd9cf8c5209fa4845a0ea49692 # rest API
-            client-secret: UbKAjd18c3A4ZfUKyoGr6qB4Bm7fSKmR
+            client-id: b3666ac61e5a48bc4b86aa650b2c89e8 # rest API
+            client-secret: mweaQa1voV0VvYAtHEKYMrNTsWSS7dVV
             redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
-            scope:
-              - profile_nickname
-              - profile_image
+            scope: profile_image, account_email
             client-authentication-method: POST
             client-name: Kakao
+
           naver:
             authorization-grant-type: authorization_code
-            client-id: eWJGHxatONvyH6r_QbFU # Client ID
-            client-secret: 22o1raveeG
+            client-id: Wt7w44Bz35znrEJBbnnN # Client ID
+            client-secret: wxcaH5K72R
             redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
             scope:
               - name
@@ -77,7 +72,6 @@ spring:
   redis:
     host: localhost
     port: 6379
-
 
 mybatis:
   mapper-locations: mybatis-mapper/**/*.xml
