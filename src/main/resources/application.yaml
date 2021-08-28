@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/hebe
-    username: root
-    password: 1234
+    url: jdbc:mysql://hebe-db.cok6p3wjd2e5.ap-northeast-2.rds.amazonaws.com:3306/hebe
+    username: admin
+    password: sweetgirl3!
     driver-class-name: org.mariadb.jdbc.Driver
   mail:
     host: smtp.gmail.com
@@ -70,7 +70,7 @@ spring:
   # https://github.com/microsoftarchive/redis/releases/tag/win-3.2.100
   # Redis-x64-3.2.100.msi install
   redis:
-    host: localhost
+    host: hebe-db.cok6p3wjd2e5.ap-northeast-2.rds.amazonaws.com
     port: 6379
 
 mybatis:
