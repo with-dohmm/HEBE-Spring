@@ -2,10 +2,6 @@ package com.hebe.jwt.controller;
 
 import com.hebe.jwt.model.UserDTO;
 import com.hebe.jwt.model.UserEntity;
-<<<<<<< HEAD
-import com.hebe.jwt.service.UserService;
-=======
->>>>>>> refs/remotes/origin/master
 import com.hebe.jwt.service.MailSendService;
 import com.hebe.jwt.service.UserService;
 import com.hebe.jwt.util.CookieUtil;
@@ -31,9 +27,7 @@ public class UserController {
     @PostMapping("/joinAuth")
     public String joinAuth(@RequestBody UserDTO param) {
         String authKey = "1";
-<<<<<<< HEAD
         int result = userService.selUsername(param.getUsername());
-=======
 
         System.out.println("username : " + param.getUsername());
 
@@ -41,7 +35,6 @@ public class UserController {
 
         System.out.println("username result : " + result);
 
->>>>>>> refs/remotes/origin/master
         if(result == 0) {
             return  mailSendService.sendMail(param.getUsername());
         }
@@ -50,9 +43,6 @@ public class UserController {
 
     @PostMapping("/nickname")
     public int nickname(@RequestBody UserEntity userEntity) {
-<<<<<<< HEAD
-        return  userService.selNickname(userEntity.getNickname());
-=======
         System.out.println("nickname : " + userEntity.getNickname());
 
         int result = userService.selNickname(userEntity.getNickname());
@@ -60,7 +50,6 @@ public class UserController {
         System.out.println("nickname result : " + result);
 
         return result;
->>>>>>> refs/remotes/origin/master
     }
 
     @PostMapping("/join")
@@ -74,13 +63,9 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody UserDTO param, HttpServletResponse res) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(param.getUsername(), param.getPassword()));
-<<<<<<< HEAD
-        UserEntity userEntity = userService.login(param, res);
-=======
 
         UserEntity userEntity = userService.login(param, res);
 
->>>>>>> refs/remotes/origin/master
         userEntity.setPassword(null);
         System.out.println("로그인 정보 : " + userEntity);
         return ResponseEntity.ok(userEntity);
