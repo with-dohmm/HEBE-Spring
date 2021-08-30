@@ -5,16 +5,16 @@
 <mapper namespace="com.hebe.mapper.MyFavMapper">
     <select id="getMyFav" resultType="CardDomain">
         select A.iboard, A.title, A.iuser, date_format(A.regdt, '%Y-%m-%d') as regdt, A.thumbnail, B.favCnt, C.username, C.nickname, C.profileimg
-        from diaryDB A
+        from diarydb A
         INNER JOIN (
             SELECT iboard, count(iboard) as favCnt
-            FROM favDB
+            FROM favdb
             GROUP BY iboard
         ) B
         ON A.iboard = B.iboard
-        INNER JOIN userDB C
+        INNER JOIN userdb C
         ON A.iuser = C.iuser
-        INNER JOIN favDB D
+        INNER JOIN favdb D
         ON A.iboard = D.iboard
         WHERE D.iuser = #{iuser}
         AND A.title != 'preWrite'
