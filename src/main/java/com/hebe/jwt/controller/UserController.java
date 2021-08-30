@@ -2,8 +2,12 @@ package com.hebe.jwt.controller;
 
 import com.hebe.jwt.model.UserDTO;
 import com.hebe.jwt.model.UserEntity;
+<<<<<<< HEAD
 import com.hebe.jwt.service.UserService;
+=======
+>>>>>>> refs/remotes/origin/master
 import com.hebe.jwt.service.MailSendService;
+import com.hebe.jwt.service.UserService;
 import com.hebe.jwt.util.CookieUtil;
 import com.hebe.jwt.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +31,17 @@ public class UserController {
     @PostMapping("/joinAuth")
     public String joinAuth(@RequestBody UserDTO param) {
         String authKey = "1";
+<<<<<<< HEAD
         int result = userService.selUsername(param.getUsername());
+=======
+
+        System.out.println("username : " + param.getUsername());
+
+        int result = userService.selUsername(param.getUsername());
+
+        System.out.println("username result : " + result);
+
+>>>>>>> refs/remotes/origin/master
         if(result == 0) {
             return  mailSendService.sendMail(param.getUsername());
         }
@@ -36,7 +50,17 @@ public class UserController {
 
     @PostMapping("/nickname")
     public int nickname(@RequestBody UserEntity userEntity) {
+<<<<<<< HEAD
         return  userService.selNickname(userEntity.getNickname());
+=======
+        System.out.println("nickname : " + userEntity.getNickname());
+
+        int result = userService.selNickname(userEntity.getNickname());
+
+        System.out.println("nickname result : " + result);
+
+        return result;
+>>>>>>> refs/remotes/origin/master
     }
 
     @PostMapping("/join")
@@ -50,7 +74,13 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody UserDTO param, HttpServletResponse res) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(param.getUsername(), param.getPassword()));
+<<<<<<< HEAD
         UserEntity userEntity = userService.login(param, res);
+=======
+
+        UserEntity userEntity = userService.login(param, res);
+
+>>>>>>> refs/remotes/origin/master
         userEntity.setPassword(null);
         System.out.println("로그인 정보 : " + userEntity);
         return ResponseEntity.ok(userEntity);
@@ -91,6 +121,25 @@ public class UserController {
         UserEntity user = userService.apiLogin(param, res);
         user.setPassword(null);
         System.out.println("user info : " + user);
+        return ResponseEntity.ok(user);
+    }
+
+    @PostMapping("/profileMod")
+    public ResponseEntity<?> profileMod(@RequestParam(value="profileimg", required = false) MultipartFile file, String nickname, String introduction, int iuser) {
+        UserEntity user = new UserEntity();
+        user.setNickname(nickname);
+        user.setIntroduction(introduction);
+        user.setIuser(iuser);
+
+        if(file != null) {
+            String img = userService.fileToString(file, iuser);
+            user.setProfileimg(img);
+        }
+
+        System.out.println(user);
+        userService.profileMod(user);
+        user.setPassword("");
+
         return ResponseEntity.ok(user);
     }
 }

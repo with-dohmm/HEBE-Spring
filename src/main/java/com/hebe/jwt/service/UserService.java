@@ -8,17 +8,24 @@ import com.hebe.jwt.util.CookieUtil;
 import com.hebe.jwt.util.JwtUtil;
 import com.hebe.jwt.util.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+<<<<<<< HEAD
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+=======
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+>>>>>>> refs/remotes/origin/master
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+<<<<<<< HEAD
 import java.util.UUID;
+=======
+>>>>>>> refs/remotes/origin/master
 
 @Service
 public class UserService {
@@ -27,8 +34,11 @@ public class UserService {
     @Autowired private JwtUtil jwtUtil;
     @Autowired private CookieUtil cookieUtil;
     @Autowired private RedisUtil redisUtil;
+<<<<<<< HEAD
     @Autowired private AuthenticationManager authenticationManager;
     @Autowired private PasswordEncoder passwordEncoder;
+=======
+>>>>>>> refs/remotes/origin/master
 
     public int selUsername(String username) {
         int result = userMapper.selUsername(username);
@@ -45,14 +55,23 @@ public class UserService {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setIntroduction("한 줄 소개");
+<<<<<<< HEAD
         user.setProfileimg("/img/common/profile.png");
         user.setProvider("HEBE");
+=======
+<<<<<<<< HEAD:src/main/java/com/hebe/jwt/service/UserService.java
+        user.setProfileimg("/img/common/profile.png");
+        user.setProvider("HEBE");
+========
+>>>>>>>> refs/remotes/origin/master:src/main/java/com/hebe/jwt/service/AuthService.java
+>>>>>>> refs/remotes/origin/master
         userRepository.save(user);
     }
 
     public UserEntity login(UserDTO user, HttpServletResponse res) {
         System.out.println("AuthService 진입!");
         UserEntity userEntity = userRepository.findByUsername(user.getUsername());
+<<<<<<< HEAD
         jwtCookie(userEntity, res);
         return userEntity;
     }
@@ -84,6 +103,8 @@ public class UserService {
     }
 
     public void jwtCookie(UserEntity userEntity, HttpServletResponse res) {
+=======
+>>>>>>> refs/remotes/origin/master
         String token = jwtUtil.generateToken(userEntity);
         String refreshJwt = jwtUtil.generateRefreshToken(userEntity);
         Cookie accessToken = cookieUtil.createCookie(JwtUtil.ACCESS_TOKEN_NAME, token);
@@ -91,15 +112,32 @@ public class UserService {
         redisUtil.setDataExpire(refreshJwt, userEntity.getUsername(), JwtUtil.REFRESH_TOKEN_VALIDATION_SECOND);
         res.addCookie(accessToken);
         res.addCookie(refreshToken);
+<<<<<<< HEAD
+=======
+        return userEntity;
+>>>>>>> refs/remotes/origin/master
     }
 
     public String fileToString(MultipartFile file, int iuser) {
         String path = "C:\\study\\practice\\springboot\\HEBE-prac\\real\\HEBE-app_9\\public\\img\\user\\" + iuser + "\\profile";
+<<<<<<< HEAD
         File dir = new File(path);
         if(!dir.exists()) { dir.mkdirs(); }
         File target = new File(path + "/" + iuser + ".jpg");
         try { file.transferTo(target); }
         catch (Exception e) { e.printStackTrace(); }
+=======
+
+        File dir = new File(path);
+
+        if(!dir.exists()) { dir.mkdirs(); }
+
+        File target = new File(path + "/" + iuser + ".jpg");
+
+        try { file.transferTo(target); }
+        catch (Exception e) { e.printStackTrace(); }
+
+>>>>>>> refs/remotes/origin/master
         return "/img/user/" + iuser + "/profile/" + iuser + ".jpg";
     }
 
