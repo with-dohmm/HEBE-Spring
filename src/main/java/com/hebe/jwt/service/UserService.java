@@ -48,8 +48,6 @@ public class UserService {
         user.setIntroduction("한 줄 소개");
         user.setProfileimg("/img/common/profile.png");
         user.setProvider("HEBE");
-        user.setProfileimg("/img/common/profile.png");
-        user.setProvider("HEBE");
 
         userRepository.save(user);
     }
