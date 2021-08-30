@@ -5,14 +5,14 @@
 <mapper namespace="com.hebe.mapper.DiaryMapper">
     <select id="selUserDiary" resultType="CardDomain">
         select A.iboard, A.title, A.iuser, date_format(A.regdt, '%Y-%m-%d') as regdt, A.thumbnail, B.favCnt, C.username, C.nickname, C.profileimg, C.introduction
-        from diaryDB A
+        from diarydb A
         LEFT JOIN (
             SELECT iboard, count(iboard) as favCnt
-            FROM favDB
+            FROM favdb
             GROUP BY iboard
         ) B
         ON A.iboard = B.iboard
-        LEFT JOIN userDB C
+        LEFT JOIN userdb C
         ON A.iuser = C.iuser
         WHERE C.iuser = #{iuser}
         AND A.title != 'preWrite'
@@ -21,14 +21,14 @@
 
     <select id="selUserDiaryPaging" resultType="CardDomain">
         select A.iboard, A.title, A.iuser, date_format(A.regdt, '%Y-%m-%d') as regdt, A.thumbnail, B.favCnt, C.username, C.nickname, C.profileimg, C.introduction
-        from diaryDB A
+        from diarydb A
         LEFT JOIN (
             SELECT iboard, count(iboard) as favCnt
-            FROM favDB
+            FROM favdb
             GROUP BY iboard
         ) B
         ON A.iboard = B.iboard
-        LEFT JOIN userDB C
+        LEFT JOIN userdb C
         ON A.iuser = C.iuser
         WHERE C.iuser = #{iuser}
         AND A.title != 'preWrite'
@@ -38,79 +38,79 @@
 
     <select id="selUserInfo" resultType="UserEntity">
         select profileimg, nickname, introduction
-        from userDB
+        from userdb
         where iuser = #{iuser}
     </select>
 
     <insert id="preWriteDiary">
-        insert into diaryDB
+        insert into diarydb
             (title, content, iuser)
         values
             (#{title}, #{content}, #{iuser});
     </insert>
 
     <select id="getMostRecent" resultType="DiaryEntity">
-        select * from diaryDB ORDER BY iboard DESC LIMIT 1;
+        select * from diarydb ORDER BY iboard DESC LIMIT 1;
     </select>
 
     <update id="writeDiary">
-        update diaryDB
+        update diarydb
         set iuser = #{iuser}, title = #{title}, content = #{content}, thumbnail = #{thumbnail}
         where iboard = #{iboard}
     </update>
 
     <delete id="deleteDiary">
-        delete from diaryDB
+        delete from diarydb
         where iboard = #{iboard} and iuser = #{iuser}
     </delete>
 
     <select id="detailDiary" resultType="DetailDomain">
         select A.iuser, A.title, A.content, date_format(A.regdt, '%Y-%m-%d') as regdt, B.profileimg, B.nickname, B.introduction, (
             select count(*)
-            from favDB
+            from favdb
             where iboard = #{iboard} and iuser = #{iuser}
         ) as isFav
-        from diaryDB A
-        inner join userDB B
+        from diarydb A
+        inner join userdb B
         on A.iuser = B.iuser
         where A.iboard = #{iboard}
     </select>
 
     <select id="cmtList" resultType="CmtDomain">
         select A.icmt, A.comment, A.iboard, A.iuser, date_format(A.regdt, '%Y-%m-%d') as regdt, B.profileimg, B.nickname, B.introduction
-        from cmtDB A
-        inner join userDB B
+        from cmtdb A
+        inner join userdb B
         on A.iuser = B.iuser
         where iboard = #{iboard}
     </select>
 
     <insert id="cmtWrite">
-        insert into cmtDB
+        insert into cmtdb
             (comment, iboard, iuser)
         values
             (#{comment}, #{iboard}, #{iuser})
     </insert>
 
     <delete id="cmtDelete">
-        delete from cmtDB
+        delete from cmtdb
         where icmt = #{icmt} and iuser = #{iuser}
     </delete>
 
     <update id="cmtUpdate">
-        update cmtDB
+        update cmtdb
         set comment = #{comment}
         where icmt = #{icmt} and iuser = #{iuser}
     </update>
 
     <insert id="addFav">
-        insert into favDB
+        insert into favdb
             (iuser, iboard)
         values
             (#{iuser}, #{iboard})
     </insert>
 
     <delete id="removeFav">
-        delete from favDB
+        delete from favdb
         where iuser = #{iuser} and iboard = #{iboard}
     </delete>
 </mapper>
