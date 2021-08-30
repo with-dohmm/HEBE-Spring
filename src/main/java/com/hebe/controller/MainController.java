@@ -28,10 +28,6 @@ public class MainController {
         return MainService.selRecentList();
     }
 
-    // 유저 검색
-//    @PostMapping("/search")
-//    public UserEntity searchUser(UserEntity param) { return MainService.searchUser(param); }
-
     // 유저 검색(리스트)
     @PostMapping("/search")
     public List<UserEntity> searchUserList(UserEntity param) {

@@ -2,6 +2,7 @@ package com.hebe.mapper;
 
 import com.hebe.jwt.model.UserEntity;
 import com.hebe.vo.*;
+import org.apache.catalina.User;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -11,6 +12,12 @@ public interface DiaryMapper {
 
     // 특정 유저 게시글 조회
     List<CardDomain> selUserDiary(UserEntity param);
+
+    // 특정 유저 게시글 조회 (페이징)
+    List<CardDomain> selUserDiaryPaging(UserEntity param);
+
+    // 검색한 유저 정보 가져오기
+    UserEntity selUserInfo(UserEntity param);
 
     // 글 작성
     int writeDiary(DiaryEntity param);
