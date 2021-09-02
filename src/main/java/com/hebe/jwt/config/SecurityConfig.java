@@ -58,7 +58,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .httpBasic().disable(); // 기본 인증 방식 사용 x
 
         http.authorizeRequests()
-                .antMatchers("/api/main/**", "/api/user/**", "/api/oauth/**").permitAll()
+                .antMatchers(
+                        "/api/main/**"
+                        , "/api/user/**"
+                        , "/api/oauth/**"
+                        , "/api/detail"
+                        , "/api/cmt/list"
+                        , "/api/search"
+                ).permitAll()
                 .anyRequest().authenticated();
 
         http.formLogin().disable();
