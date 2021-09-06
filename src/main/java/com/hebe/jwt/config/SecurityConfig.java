@@ -65,8 +65,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         , "/api/detail"
                         , "/api/cmt/list"
                         , "/api/search"
+                        , "/api/diary"
+                        , "/api/diary/**"
                 ).permitAll()
-                .anyRequest().authenticated();
+                .antMatchers(
+                        "/api/write"
+                        , "/api/delete"
+                        , "/api/preWrite"
+                        , "/api/diaryImg"
+                        , "/api/cancel"
+                        , "/api/cmt/write"
+                        , "/api/cmt/delete"
+                        , "/api/cmt/update"
+                        , "/api/fav"
+                        , "/update/**"
+                        , "/api/user/profileMod"
+                ).authenticated();
+
+
+                // .anyRequest().authenticated();
 
         http.formLogin().disable();
 
