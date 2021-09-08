@@ -5,6 +5,7 @@ import com.amazonaws.SdkClientException;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,7 +24,8 @@ public class ImageManagerService {
 
     // 임시 파일 생성 & 업데이트 & 임시 파일 삭제
     public void createAndUploadFile(MultipartFile mf, String filePath) {
-        String saveFileName = UUID.randomUUID().toString();
+        String ext = FilenameUtils.getExtension(mf.getOriginalFilename());
+        String saveFileName = UUID.randomUUID().toString() + "." + ext;
 
         // 파일 생성
         File uploadFile = null;
