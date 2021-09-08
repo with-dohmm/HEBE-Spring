@@ -58,9 +58,9 @@ public class DiaryController {
 
     // 이미지 업로드
     @PostMapping("/diaryImg")
-    public void uploadImage(MultipartFile img, int iboard, int iuser) { // 기존엔 String 타입
+    public String uploadImage(MultipartFile img, int iboard, int iuser) { // 기존엔 String 타입
         String filePath = "img/" + iuser + "/" + iboard;
-        ImageManagerService.createAndUploadFile(img, filePath);
+        return ImageManagerService.createAndUploadFile(img, filePath);
 
         // return DiaryService.uploadImage(img, iboard, iuser);
     }

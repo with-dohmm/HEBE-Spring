@@ -23,7 +23,7 @@ public class ImageManagerService {
     private final UploadImageS3 uploadImageS3;
 
     // 임시 파일 생성 & 업데이트 & 임시 파일 삭제
-    public void createAndUploadFile(MultipartFile mf, String filePath) {
+    public String createAndUploadFile(MultipartFile mf, String filePath) {
         String ext = FilenameUtils.getExtension(mf.getOriginalFilename());
         String saveFileName = UUID.randomUUID().toString() + "." + ext;
 
@@ -47,5 +47,6 @@ public class ImageManagerService {
                 uploadFile.delete();
             }
         }
+        return saveFileName;
     }
 }
