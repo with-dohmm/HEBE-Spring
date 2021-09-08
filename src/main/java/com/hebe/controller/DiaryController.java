@@ -1,5 +1,6 @@
 package com.hebe.controller;
 
+import com.hebe.imgUpload.ImageManagerService;
 import com.hebe.jwt.model.UserEntity;
 import com.hebe.service.DiaryService;
 import com.hebe.vo.*;
@@ -17,6 +18,9 @@ public class DiaryController {
 
     @Autowired
     private DiaryService DiaryService;
+
+    @Autowired
+    private ImageManagerService ImageManagerService;
 
     // 특정 유저 게시글 조회
     @PostMapping("/diary")
@@ -54,8 +58,12 @@ public class DiaryController {
 
     // 이미지 업로드
     @PostMapping("/diaryImg")
-    public String uploadImage(MultipartFile img, int iboard, int iuser) {
-        return DiaryService.uploadImage(img, iboard, iuser); }
+    public void uploadImage(MultipartFile img, int iboard, int iuser) { // 기존엔 String 타입
+        String filePath = "img/" + iuser + "/" + iboard;
+        ImageManagerService.createAndUploadFile(img, filePath);
+
+        // return DiaryService.uploadImage(img, iboard, iuser);
+    }
 
     // 글 작성
     @PostMapping("/write")
@@ -67,9 +75,10 @@ public class DiaryController {
 
     // 글 작성 취소
     @PostMapping("/cancel")
-    public int cancelDiary(DiaryEntity param) {
+    public void cancelDiary(DiaryEntity param) { // 원래는 int
         System.out.println("/api/cancel 작동");
-        return DiaryService.cancelDiary(param);
+
+        // return DiaryService.cancelDiary(param);
     }
 
     // detail 조회

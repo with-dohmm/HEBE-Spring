@@ -1,5 +1,6 @@
 package com.hebe.service;
 
+import com.hebe.imgUpload.UploadImageS3;
 import com.hebe.jwt.model.UserEntity;
 import com.hebe.mapper.DiaryMapper;
 import com.hebe.vo.*;
@@ -17,6 +18,9 @@ public class DiaryService {
 
     @Autowired
     private DiaryMapper DiaryMapper;
+
+    @Autowired
+    private UploadImageS3 UploadImageS3;
 
     // 특정 유저 게시글 조회
     public List<CardDomain> selUserDiary(UserEntity param) { return DiaryMapper.selUserDiary(param); }
@@ -67,30 +71,38 @@ public class DiaryService {
     public int writeDiary(DiaryEntity param) { return DiaryMapper.writeDiary(param); }
 
     // 글 작성 취소
-    public int cancelDiary(DiaryEntity param) {
-        File target = new File("C:/Users/82109/Desktop/project/hebe-react/public/img/" + param.getIuser() + "/" + param.getIboard());
-        if (target.exists()) {
-            File[] imgList = target.listFiles();
-            for (int i = 0; i< imgList.length; i++) {
-                imgList[i].delete();
-            }
-            if (target.delete()) {
-                System.out.println("폴더 삭제 성공");
-            } else {
-                System.out.println("폴더 삭제 실패");
-            }
-        } else {
-            System.out.println("폴더가 존재하지 않습니다.");
-        }
+    public void cancelDiary(DiaryEntity param) { // 원래는 int
+//        File target = new File("C:/Users/82109/Desktop/project/hebe-react/public/img/" + param.getIuser() + "/" + param.getIboard());
+//        if (target.exists()) {
+//            File[] imgList = target.listFiles();
+//            for (int i = 0; i< imgList.length; i++) {
+//                imgList[i].delete();
+//            }
+//            if (target.delete()) {
+//                System.out.println("폴더 삭제 성공");
+//            } else {
+//                System.out.println("폴더 삭제 실패");
+//            }
+//        } else {
+//            System.out.println("폴더가 존재하지 않습니다.");
+//        }
+//
+//        return DiaryMapper.deleteDiary(param);
 
-        return DiaryMapper.deleteDiary(param);
+        String dirPath = "img/" + param.getIuser() + "/" + param.getIboard();
+        UploadImageS3.delete(dirPath);
     }
 
     // detail 조회
     public DetailDomain detailDiary(DiaryEntity param) { return DiaryMapper.detailDiary(param); }
 
     // 글 삭제
-    public int deleteDiary(DiaryEntity param) { return DiaryMapper.deleteDiary(param); }
+    public int deleteDiary(DiaryEntity param) {
+        String dirPath = "img/" + param.getIuser() + "/" + param.getIboard();
+        UploadImageS3.delete(dirPath);
+
+        return DiaryMapper.deleteDiary(param);
+    }
 
     // 댓글 리스트 조회
     public List<CmtDomain> cmtList(DiaryEntity param) { return DiaryMapper.cmtList(param); }

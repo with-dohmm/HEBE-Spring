@@ -81,3 +81,15 @@ mybatis:
 
 server:
   port: 8080
+
+cloud:
+  aws:
+    credentials:
+      accessKey: AKIAXJCTAAUDILUQ2MRI
+      secretKey: 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
+    s3:
+      bucket: hebe-bucket
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
