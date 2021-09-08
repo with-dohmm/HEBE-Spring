@@ -20,7 +20,7 @@ public class UploadImageS3 {
     private final AmazonS3Client amazonS3;
     private AmazonS3 s3Client;
 
-    @Value("${aws.s3.image.bucket}")
+    @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
     public String upload(File uploadFile, String filePath, String saveFileName) {
@@ -31,21 +31,21 @@ public class UploadImageS3 {
         return fileName;
     }
 
-    public void delete(String key) {
-        try {
-            //Delete 객체 생성
-            DeleteObjectRequest deleteObjectRequest = new DeleteObjectRequest(this.bucket, key);
-
-            //Delete
-            this.s3Client.deleteObject(deleteObjectRequest);
-            System.out.println(String.format("[%s] deletion complete", key));
-
-        } catch (AmazonServiceException e) {
-            e.printStackTrace();
-        } catch (SdkClientException e) {
-            e.printStackTrace();
-        }
-    }
+//    public void delete(String key) {
+//        try {
+//            //Delete 객체 생성
+//            DeleteObjectRequest deleteObjectRequest = new DeleteObjectRequest(this.bucket, key);
+//
+//            //Delete
+//            s3Client.deleteObject(deleteObjectRequest);
+//            System.out.println(String.format("[%s] deletion complete", key));
+//
+//        } catch (AmazonServiceException e) {
+//            e.printStackTrace();
+//        } catch (SdkClientException e) {
+//            e.printStackTrace();
+//        }
+//    }
 }
 
 // file path에 유저네임, 아이보드값 넣기

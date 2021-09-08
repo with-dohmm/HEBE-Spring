@@ -75,10 +75,9 @@ public class DiaryController {
 
     // 글 작성 취소
     @PostMapping("/cancel")
-    public void cancelDiary(DiaryEntity param) { // 원래는 int
+    public int cancelDiary(DiaryEntity param) {
         System.out.println("/api/cancel 작동");
-
-        // return DiaryService.cancelDiary(param);
+        return DiaryService.cancelDiary(param);
     }
 
     // detail 조회

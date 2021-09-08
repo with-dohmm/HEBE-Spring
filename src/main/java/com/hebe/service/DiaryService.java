@@ -71,7 +71,7 @@ public class DiaryService {
     public int writeDiary(DiaryEntity param) { return DiaryMapper.writeDiary(param); }
 
     // 글 작성 취소
-    public void cancelDiary(DiaryEntity param) { // 원래는 int
+    public int cancelDiary(DiaryEntity param) {
 //        File target = new File("C:/Users/82109/Desktop/project/hebe-react/public/img/" + param.getIuser() + "/" + param.getIboard());
 //        if (target.exists()) {
 //            File[] imgList = target.listFiles();
@@ -87,10 +87,10 @@ public class DiaryService {
 //            System.out.println("폴더가 존재하지 않습니다.");
 //        }
 //
-//        return DiaryMapper.deleteDiary(param);
-
         String dirPath = "img/" + param.getIuser() + "/" + param.getIboard();
-        UploadImageS3.delete(dirPath);
+        // UploadImageS3.delete(dirPath);
+
+        return DiaryMapper.deleteDiary(param);
     }
 
     // detail 조회
@@ -99,7 +99,7 @@ public class DiaryService {
     // 글 삭제
     public int deleteDiary(DiaryEntity param) {
         String dirPath = "img/" + param.getIuser() + "/" + param.getIboard();
-        UploadImageS3.delete(dirPath);
+        // UploadImageS3.delete(dirPath);
 
         return DiaryMapper.deleteDiary(param);
     }
