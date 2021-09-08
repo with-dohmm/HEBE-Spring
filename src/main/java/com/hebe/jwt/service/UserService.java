@@ -30,8 +30,8 @@ public class UserService {
     @Autowired private CookieUtil cookieUtil;
     @Autowired private RedisUtil redisUtil;
 
-    private FileManager fileManager;
-    private UploadImageS3 uploadImageS3;
+    @Autowired private FileManager fileManager;
+    @Autowired private UploadImageS3 uploadImageS3;
 
     public int selUsername(String username) {
         int result = userMapper.selUsername(username);
