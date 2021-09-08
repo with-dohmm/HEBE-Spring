@@ -95,10 +95,8 @@ public class UserController {
         user.setIntroduction(introduction);
         user.setIuser(iuser);
 
-        if(file != null) {
-            String img = userService.fileToString(file, iuser);
-            user.setProfileimg(img);
-        }
+        String img = userService.fileToString(file, iuser);
+        user.setProfileimg(img);
 
         System.out.println(user);
         userService.profileMod(user);
