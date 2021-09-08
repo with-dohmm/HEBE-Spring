@@ -53,11 +53,11 @@
         select * from diarydb ORDER BY iboard DESC LIMIT 1;
     </select>
 
-<!--    <update id="writeDiary">-->
-<!--        update diarydb-->
-<!--        set iuser = #{iuser}, title = #{title}, content = #{content}, thumbnail = #{thumbnail}-->
-<!--        where iboard = #{iboard}-->
-<!--    </update>-->
+    <update id="updateDiary">
+        update diarydb
+        set iuser = #{iuser}, title = #{title}, content = #{content}, thumbnail = #{thumbnail}
+        where iboard = #{iboard}
+    </update>
 
     <insert id="writeDiary">
         insert into diarydb

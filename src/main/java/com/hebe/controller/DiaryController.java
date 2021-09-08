@@ -80,6 +80,13 @@ public class DiaryController {
         return DiaryService.cancelDiary(param);
     }
 
+    // 글 수정
+    @PostMapping("/update")
+    public int updateDiary(DiaryEntity param) {
+        System.out.println("/api/update 작동");
+        return 0;
+    }
+
     // detail 조회
     @PostMapping("/detail")
     public DetailDomain detailDiary(DiaryEntity param) { return DiaryService.detailDiary(param); }

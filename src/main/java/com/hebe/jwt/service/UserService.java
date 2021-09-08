@@ -1,5 +1,7 @@
 package com.hebe.jwt.service;
 
+import com.hebe.imgUpload.FileManager;
+import com.hebe.imgUpload.UploadImageS3;
 import com.hebe.jwt.mapper.UserMapper;
 import com.hebe.jwt.model.UserDTO;
 import com.hebe.jwt.model.UserEntity;
@@ -7,6 +9,7 @@ import com.hebe.jwt.repository.UserRepository;
 import com.hebe.jwt.util.CookieUtil;
 import com.hebe.jwt.util.JwtUtil;
 import com.hebe.jwt.util.RedisUtil;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -15,6 +18,9 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.io.IOException;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class UserService {
@@ -23,6 +29,9 @@ public class UserService {
     @Autowired private JwtUtil jwtUtil;
     @Autowired private CookieUtil cookieUtil;
     @Autowired private RedisUtil redisUtil;
+
+    private FileManager fileManager;
+    private UploadImageS3 uploadImageS3;
 
     public int selUsername(String username) {
         int result = userMapper.selUsername(username);
@@ -57,19 +66,48 @@ public class UserService {
         return userEntity;
     }
 
-    public String fileToString(MultipartFile file, int iuser) {
-        String path = "C:\\study\\practice\\springboot\\HEBE-prac\\real\\HEBE-app_9\\public\\img\\user\\" + iuser + "\\profile";
+//    public String fileToString(MultipartFile file, int iuser) {
+//        String path = "C:\\study\\practice\\springboot\\HEBE-prac\\real\\HEBE-app_9\\public\\img\\user\\" + iuser + "\\profile";
+//
+//        File dir = new File(path);
+//
+//        if(!dir.exists()) { dir.mkdirs(); }
+//
+//        File target = new File(path + "/" + iuser + ".jpg");
+//
+//        try { file.transferTo(target); }
+//        catch (Exception e) { e.printStackTrace(); }
+//
+//        return "/img/user/" + iuser + "/profile/" + iuser + ".jpg";
+//    }
 
-        File dir = new File(path);
+    public String fileToString(MultipartFile mf, int iuser) {
+        String ext = FilenameUtils.getExtension(mf.getOriginalFilename());
+        String saveFileName = UUID.randomUUID().toString() + "." + ext;
 
-        if(!dir.exists()) { dir.mkdirs(); }
+        String filePath = "img/profile/" + iuser;
 
-        File target = new File(path + "/" + iuser + ".jpg");
+        File uploadFile = null;
+        try {
+            Optional<File> uploadFileOpt = fileManager.convertMultipartFileToFile(mf);
+            if (uploadFileOpt.isEmpty()) {
+                System.out.println("파일 변환에 실패했습니다.");
+            }
+            uploadFile = uploadFileOpt.get();
 
-        try { file.transferTo(target); }
-        catch (Exception e) { e.printStackTrace(); }
+            // 파일 업로드
+            String saveFilePath = uploadImageS3.upload(uploadFile, filePath, saveFileName);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("파일을 업로드 하던 중 에러가 발생했습니다.");
+        } finally {
+            // 파일 삭제
+            if (uploadFile != null) {
+                uploadFile.delete();
+            }
+        }
 
-        return "/img/user/" + iuser + "/profile/" + iuser + ".jpg";
+        return "/" + filePath + "/" + saveFileName;
     }
 
     public void profileMod(UserEntity user) {

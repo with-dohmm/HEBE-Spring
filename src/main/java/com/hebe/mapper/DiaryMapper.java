@@ -22,6 +22,9 @@ public interface DiaryMapper {
     // 글 작성
     int writeDiary(DiaryEntity param);
 
+    // 글 수정
+    int updateDiary(DiaryEntity param);
+
     // 글쓰기 버튼 클릭 시 임의의 글 생성 (이미지 폴더 담아두기용)
     int preWriteDiary(DiaryEntity param);
 

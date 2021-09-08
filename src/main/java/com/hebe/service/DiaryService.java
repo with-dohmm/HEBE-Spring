@@ -70,6 +70,9 @@ public class DiaryService {
     // 글 작성
     public int writeDiary(DiaryEntity param) { return DiaryMapper.writeDiary(param); }
 
+    // 글 수정
+    public int updateDiary(DiaryEntity param) { return DiaryMapper.updateDiary(param); }
+
     // 글 작성 취소
     public int cancelDiary(DiaryEntity param) {
 //        File target = new File("C:/Users/82109/Desktop/project/hebe-react/public/img/" + param.getIuser() + "/" + param.getIboard());

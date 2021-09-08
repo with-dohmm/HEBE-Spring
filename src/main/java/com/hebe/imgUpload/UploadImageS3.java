@@ -30,22 +30,4 @@ public class UploadImageS3 {
 
         return fileName;
     }
-
-//    public void delete(String key) {
-//        try {
-//            //Delete 객체 생성
-//            DeleteObjectRequest deleteObjectRequest = new DeleteObjectRequest(this.bucket, key);
-//
-//            //Delete
-//            s3Client.deleteObject(deleteObjectRequest);
-//            System.out.println(String.format("[%s] deletion complete", key));
-//
-//        } catch (AmazonServiceException e) {
-//            e.printStackTrace();
-//        } catch (SdkClientException e) {
-//            e.printStackTrace();
-//        }
-//    }
 }
-
-// file path에 유저네임, 아이보드값 넣기

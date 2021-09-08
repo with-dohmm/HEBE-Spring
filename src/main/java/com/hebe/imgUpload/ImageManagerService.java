@@ -19,8 +19,8 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ImageManagerService {
 
-    private final FileManager fileManager;
-    private final UploadImageS3 uploadImageS3;
+    private FileManager fileManager;
+    private UploadImageS3 uploadImageS3;
 
     // 임시 파일 생성 & 업데이트 & 임시 파일 삭제
     public String createAndUploadFile(MultipartFile mf, String filePath) {
@@ -37,7 +37,7 @@ public class ImageManagerService {
             uploadFile = uploadFileOpt.get();
 
             // 파일 업로드
-            String saveFilePath = uploadImageS3.upload(uploadFile, filePath, saveFileName);
+            uploadImageS3.upload(uploadFile, filePath, saveFileName);
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("파일을 업로드 하던 중 에러가 발생했습니다.");
