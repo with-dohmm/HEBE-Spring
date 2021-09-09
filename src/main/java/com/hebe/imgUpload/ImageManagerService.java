@@ -6,6 +6,7 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.FilenameUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,7 +20,10 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ImageManagerService {
 
+    @Autowired
     private FileManager fileManager;
+
+    @Autowired
     private UploadImageS3 uploadImageS3;
 
     // 임시 파일 생성 & 업데이트 & 임시 파일 삭제
