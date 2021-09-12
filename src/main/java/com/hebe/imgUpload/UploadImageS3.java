@@ -18,7 +18,6 @@ import java.io.File;
 public class UploadImageS3 {
 
     private final AmazonS3Client amazonS3;
-    private AmazonS3 s3Client;
 
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
@@ -29,5 +28,19 @@ public class UploadImageS3 {
                 .withCannedAcl(CannedAccessControlList.PublicRead));
 
         return fileName;
+    }
+
+    public void delete(String filePath) {
+        try {
+            //Delete 객체 생성
+            DeleteObjectRequest deleteObjectRequest = new DeleteObjectRequest(bucket, filePath);
+            //Delete
+            amazonS3.deleteObject(deleteObjectRequest);
+            System.out.println(String.format("[%s] deletion complete", filePath));
+        } catch (AmazonServiceException e) {
+            e.printStackTrace();
+        } catch (SdkClientException e) {
+            e.printStackTrace();
+        }
     }
 }

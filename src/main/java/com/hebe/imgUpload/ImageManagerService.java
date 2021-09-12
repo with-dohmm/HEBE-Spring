@@ -53,4 +53,9 @@ public class ImageManagerService {
         }
         return saveFileName;
     }
+
+    // 글 삭제 시 해당 글에 있는 s3 이미지 삭제
+    public void deleteFile(String filePath) {
+        uploadImageS3.delete(filePath);
+    }
 }

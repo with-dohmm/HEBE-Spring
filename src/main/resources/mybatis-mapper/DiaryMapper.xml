@@ -42,13 +42,6 @@
         where iuser = #{iuser}
     </select>
 
-    <insert id="preWriteDiary">
-        insert into diarydb
-            (title, content, iuser)
-        values
-            (#{title}, #{content}, #{iuser});
-    </insert>
-
     <select id="getMostRecent" resultType="DiaryEntity">
         select * from diarydb ORDER BY iboard DESC LIMIT 1;
     </select>

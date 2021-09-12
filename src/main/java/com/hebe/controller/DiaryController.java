@@ -46,12 +46,6 @@ public class DiaryController {
         return userInfo;
     }
 
-    // 글쓰기 버튼 클릭 시 임의의 글 생성 (이미지 폴더 담아두기용)
-    @PostMapping("/preWrite")
-    public int preWriteDiary(DiaryEntity param) {
-        return DiaryService.preWriteDiary(param);
-    }
-
     // 최신 글 iboard 가져오기
     @PostMapping("/diary/recent")
     public int getRecentIboard() { return DiaryService.getRecentIboard(); }
@@ -84,7 +78,9 @@ public class DiaryController {
     @PostMapping("/update")
     public int updateDiary(DiaryEntity param) {
         System.out.println("/api/update 작동");
-        return 0;
+        // 수정할 때 기존에 있던 이미지 삭제 시 s3에서 이미지 삭제
+
+        return DiaryService.updateDiary(param);
     }
 
     // detail 조회
@@ -93,7 +89,12 @@ public class DiaryController {
 
     // 글 삭제
     @PostMapping("/delete")
-    public int deleteDiary(DiaryEntity param) { return DiaryService.deleteDiary(param); }
+    public int deleteDiary(DiaryEntity param) {
+        String filePath = "img/" + param.getIuser() + "/" + param.getIboard();
+        ImageManagerService.deleteFile(filePath);   // 글 삭제 시 s3에 이미지 삭제
+
+        return DiaryService.deleteDiary(param);
+    }
 
     // 댓글 리스트 조회
     @PostMapping("/cmt/list")

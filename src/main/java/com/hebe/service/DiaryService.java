@@ -31,41 +31,8 @@ public class DiaryService {
     // 검색한 유저 정보 가져오기
     public UserEntity selUserInfo(UserEntity param) { return DiaryMapper.selUserInfo(param); }
 
-    // 글쓰기 버튼 클릭 시 임의의 글 생성 (이미지 폴더 담아두기용)
-    public int preWriteDiary(DiaryEntity param) {
-        // 임의의 글 생성, 결과 담아둠
-        int result = DiaryMapper.preWriteDiary(param);
-        System.out.println("result : " + result);
-
-        // 유저 - iboard 이미지 폴더 생성
-        int recentIboard = DiaryMapper.getMostRecent().getIboard();
-
-        final String PATH = "C:/Users/82109/Desktop/project/hebe-react/public/img/" + param.getIuser() + "/" + recentIboard;
-        File folder = new File(PATH);
-        folder.mkdirs();
-
-        return result;
-    }
-
     // 최신 글 iboard 가져오기
     public int getRecentIboard() { return DiaryMapper.getMostRecent().getIboard(); }
-
-    // 이미지 업로드 - 글쓰기 (write)
-    public String uploadImage(MultipartFile img, int iboard, int iuser) {
-        String ext = FilenameUtils.getExtension(img.getOriginalFilename());
-        String fileNm = UUID.randomUUID().toString() + "." + ext;
-
-        int temp = iboard;  // 기존 글에 새로 이미지를 추가할 경우 => 기존 폴더(iboard)에 추가
-        if (iboard == 0) {  // 수정이 아닌 새로 글 작성할 경우
-            temp = DiaryMapper.getMostRecent().getIboard();
-        }
-
-        // 나중에 로그인, 회원가입 완성하면 1 대신에 유저 토큰으로 iuser 값을 가지고 와야 함
-        File target = new File("C:/Users/82109/Desktop/project/hebe-react/public/img/" + iuser + "/" + temp + "/" + fileNm);
-        try { img.transferTo(target); } catch (Exception e) { e.printStackTrace(); }
-
-        return fileNm;
-    }
 
     // 글 작성
     public int writeDiary(DiaryEntity param) { return DiaryMapper.writeDiary(param); }
@@ -75,23 +42,8 @@ public class DiaryService {
 
     // 글 작성 취소
     public int cancelDiary(DiaryEntity param) {
-//        File target = new File("C:/Users/82109/Desktop/project/hebe-react/public/img/" + param.getIuser() + "/" + param.getIboard());
-//        if (target.exists()) {
-//            File[] imgList = target.listFiles();
-//            for (int i = 0; i< imgList.length; i++) {
-//                imgList[i].delete();
-//            }
-//            if (target.delete()) {
-//                System.out.println("폴더 삭제 성공");
-//            } else {
-//                System.out.println("폴더 삭제 실패");
-//            }
-//        } else {
-//            System.out.println("폴더가 존재하지 않습니다.");
-//        }
-//
         String dirPath = "img/" + param.getIuser() + "/" + param.getIboard();
-        // UploadImageS3.delete(dirPath);
+        // 작성 취소 시 업로드한 이미지 삭제시키기
 
         return DiaryMapper.deleteDiary(param);
     }
@@ -101,9 +53,6 @@ public class DiaryService {
 
     // 글 삭제
     public int deleteDiary(DiaryEntity param) {
-        String dirPath = "img/" + param.getIuser() + "/" + param.getIboard();
-        // UploadImageS3.delete(dirPath);
-
         return DiaryMapper.deleteDiary(param);
     }
 
