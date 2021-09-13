@@ -12,7 +12,7 @@
     </select>
 
     <select id="monthData" resultType="CalendarDTO">
-        SELECT DISTINCT DAY(regdt) as month from tododb WHERE MONTH(regdt)=#{month} AND iuser = #{iuser};
+        SELECT DISTINCT DAY(regdt) as month from tododb WHERE MONTH(regdt) = #{month} AND iuser = #{iuser};
     </select>
 
 <!--    <select id="calAllList" resultType="TodoDTO">-->

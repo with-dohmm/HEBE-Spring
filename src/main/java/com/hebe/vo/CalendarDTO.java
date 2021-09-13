@@ -9,4 +9,5 @@ import lombok.ToString;
 @ToString
 public class CalendarDTO {
     private int month;
+    private int iuser;
 }
