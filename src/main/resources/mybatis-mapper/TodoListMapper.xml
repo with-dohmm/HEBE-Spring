@@ -4,15 +4,15 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hebe.mapper.TodoMapper">
     <select id="selTodoList" resultType="TodoDTO">
-        SELECT * FROM todo WHERE iuser = #{iuser};
+        SELECT * FROM tododb WHERE iuser = #{iuser};
     </select>
 
     <select id="dayTodoList" resultType="TodoDTO">
-        SELECT * FROM todo WHERE regdt = #{regdt} and iuser = #{iuser};
+        SELECT * FROM tododb WHERE regdt = #{regdt} and iuser = #{iuser};
     </select>
 
     <select id="monthData" resultType="CalendarDTO">
-        SELECT DISTINCT DAY(regdt) as month from todo WHERE MONTH(regdt)=#{month} AND iuser = #{iuser};
+        SELECT DISTINCT DAY(regdt) as month from tododb WHERE MONTH(regdt)=#{month} AND iuser = #{iuser};
     </select>
 
 <!--    <select id="calAllList" resultType="TodoDTO">-->
@@ -23,14 +23,14 @@
 <!--    </select>-->
 
     <update id="updTodoList">
-        update todo set t_text = #{t_text} where t_board =#{t_board} AND iuser = #{iuser};
+        update tododb set t_text = #{t_text} where t_board =#{t_board} AND iuser = #{iuser};
     </update>
 
     <insert id="insTodoList">
-        insert into todo (iuser,t_num,t_text,done,regdt) values (#{iuser},#{t_num},#{t_text},#{done},#{regdt});
+        insert into tododb (iuser,t_num,t_text,done,regdt) values (#{iuser},#{t_num},#{t_text},#{done},#{regdt});
     </insert>
 
     <delete id="delTodoList">
-        DELETE FROM todo where iuser = #{iuser} and regdt = #{regdt};
+        DELETE FROM tododb where iuser = #{iuser} and regdt = #{regdt};
     </delete>
 </mapper>
