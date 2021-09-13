@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 
@@ -28,11 +29,12 @@ public class UserEntity {
     @Column(length = 10, unique = true, nullable = false)
     private String nickname;
 
+    @Column(length = 100, nullable = false)
     private String profileimg;
 
-    @Column(length = 100)
+    @Column(length = 100, nullable = false)
     private String introduction;
 
-    @Column
+    @Column(length = 10, nullable = false)
     private String provider;
 }

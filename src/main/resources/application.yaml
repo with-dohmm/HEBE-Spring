@@ -22,7 +22,7 @@ spring:
           google:
             client-id: 1032001853934-78dmac7kurqos5r8bpvs9hen0afa8bgv.apps.googleusercontent.com
             client-secret: oPRqiNcXKA9nUfMxMRYkLRe7
-            scope : email, profile
+            scope: email, profile
 
           kakao:
             authorization-grant-type: authorization_code

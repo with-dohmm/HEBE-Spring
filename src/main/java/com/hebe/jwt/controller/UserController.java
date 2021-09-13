@@ -2,8 +2,8 @@ package com.hebe.jwt.controller;
 
 import com.hebe.jwt.model.UserDTO;
 import com.hebe.jwt.model.UserEntity;
-import com.hebe.jwt.service.MailSendService;
 import com.hebe.jwt.service.UserService;
+import com.hebe.jwt.service.MailSendService;
 import com.hebe.jwt.util.CookieUtil;
 import com.hebe.jwt.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,65 +27,41 @@ public class UserController {
     @PostMapping("/joinAuth")
     public String joinAuth(@RequestBody UserDTO param) {
         String authKey = "1";
-
-        System.out.println("username : " + param.getUsername());
-
         int result = userService.selUsername(param.getUsername());
-
-        System.out.println("username result : " + result);
-
         if(result == 0) {
-            authKey = mailSendService.sendMail(param.getUsername());
-            return authKey;
+            return  mailSendService.sendMail(param.getUsername());
         }
         return authKey;
     }
 
     @PostMapping("/nickname")
     public int nickname(@RequestBody UserEntity userEntity) {
-        System.out.println("nickname : " + userEntity.getNickname());
-
-        int result = userService.selNickname(userEntity.getNickname());
-
-        System.out.println("nickname result : " + result);
-
-        return result;
+        return  userService.selNickname(userEntity.getNickname());
     }
 
     @PostMapping("/join")
     public void join(@RequestBody UserEntity userEntity){
-        System.out.println(userEntity.getUsername());
-        System.out.println(userEntity.getPassword());
-        System.out.println(userEntity.getNickname());
         userService.join(userEntity);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody UserDTO param, HttpServletResponse res) {
-        System.out.println("로그인 컨트롤러 진입!");
-
+    public ResponseEntity<?> login(@RequestBody UserEntity param, HttpServletResponse res) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(param.getUsername(), param.getPassword()));
-
         UserEntity userEntity = userService.login(param, res);
-
         userEntity.setPassword(null);
-
-        System.out.println("로그인 정보 : " + userEntity);
-
+        System.out.println("로그인");
         return ResponseEntity.ok(userEntity);
     }
 
     @PostMapping("/logout")
     public void logout(HttpServletResponse res) {
-        System.out.println("로그아웃 컨트롤러 진입!");
-
         Cookie accessToken = cookieUtil.createCookie(JwtUtil.ACCESS_TOKEN_NAME, null);
         accessToken.setMaxAge(0);
         Cookie refreshToken = cookieUtil.createCookie(JwtUtil.REFRESH_TOKEN_NAME, null);
         refreshToken.setMaxAge(0);
-
         res.addCookie(accessToken);
         res.addCookie(refreshToken);
+        System.out.println("로그아웃");
     }
 
     @PostMapping("/profileMod")
@@ -95,13 +71,21 @@ public class UserController {
         user.setIntroduction(introduction);
         user.setIuser(iuser);
 
-        String img = userService.fileToString(file, iuser);
-        user.setProfileimg(img);
+        if(file != null) {
+            String img = userService.fileToString(file, iuser);
+            user.setProfileimg(img);
+        }
 
-        System.out.println(user);
         userService.profileMod(user);
         user.setPassword("");
 
+        return ResponseEntity.ok(user);
+    }
+
+    @PostMapping(value = "/oauth")
+    public ResponseEntity<?> apiLogin(@RequestBody UserEntity param, HttpServletResponse res) {
+        UserEntity user = userService.apiLogin(param, res);
+        user.setPassword(null);
         return ResponseEntity.ok(user);
     }
 }
