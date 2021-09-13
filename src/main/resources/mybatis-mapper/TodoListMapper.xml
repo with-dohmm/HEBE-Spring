@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hebe.mapper.TodoMapper">
+    <select id="selTodoList" resultType="TodoDTO">
+        SELECT * FROM todo WHERE iuser = #{iuser};
+    </select>
+
+    <select id="dayTodoList" resultType="TodoDTO">
+        SELECT * FROM todo WHERE regdt = #{regdt} and iuser = #{iuser};
+    </select>
+
+    <select id="monthData" resultType="CalendarDTO">
+        SELECT DISTINCT DAY(regdt) as month from todo WHERE MONTH(regdt)=#{month} AND iuser = #{iuser};
+    </select>
+
+<!--    <select id="calAllList" resultType="TodoDTO">-->
+<!--        SELECT DISTINCT regdt from todo-->
+<!--        WHERE regdt > DATE_SUB(NOW(), INTERVAL 4 MONTH)-->
+<!--          AND DATE_ADD(NOW(), INTERVAL 8 MONTH) > regdt-->
+<!--        ORDER BY regdt DESC;-->
+<!--    </select>-->
+
+    <update id="updTodoList">
+        update todo set t_text = #{t_text} where t_board =#{t_board} AND iuser = #{iuser};
+    </update>
+
+    <insert id="insTodoList">
+        insert into todo (iuser,t_num,t_text,done,regdt) values (#{iuser},#{t_num},#{t_text},#{done},#{regdt});
+    </insert>
+
+    <delete id="delTodoList">
+        DELETE FROM todo where iuser = #{iuser} and regdt = #{regdt};
+    </delete>
+</mapper>
