@@ -10,8 +10,6 @@ import com.hebe.jwt.util.JwtUtil;
 import com.hebe.jwt.util.RedisUtil;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -33,6 +31,9 @@ public class UserService {
     @Autowired private CookieUtil cookieUtil;
     @Autowired private RedisUtil redisUtil;
     @Autowired private PasswordEncoder passwordEncoder;
+
+    @Autowired private FileManager fileManager;
+    @Autowired private UploadImageS3 uploadImageS3;
 
     public int selUsername(String username) {
         return userMapper.selUsername(username);
