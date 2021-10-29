@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mysql://hebe-db.cok6p3wjd2e5.ap-northeast-2.rds.amazonaws.com:3306/hebe
+    url: jdbc:mariadb://hebe-db.cok6p3wjd2e5.ap-northeast-2.rds.amazonaws.com:3306/hebe
     username: admin
     password: sweetgirl3!
     driver-class-name: org.mariadb.jdbc.Driver
@@ -8,7 +8,7 @@ spring:
     host: smtp.gmail.com
     port: 587
     username: hebenote.com@gmail.com
-    password: sweetgirl3!
+    password: sweetgirl3~
     properties:
       mail:
         smtp:
@@ -22,7 +22,7 @@ spring:
           google:
             client-id: 1032001853934-78dmac7kurqos5r8bpvs9hen0afa8bgv.apps.googleusercontent.com
             client-secret: oPRqiNcXKA9nUfMxMRYkLRe7
-            scope : email, profile
+            scope: email, profile
 
           kakao:
             authorization-grant-type: authorization_code
@@ -70,7 +70,7 @@ spring:
   # https://github.com/microsoftarchive/redis/releases/tag/win-3.2.100
   # Redis-x64-3.2.100.msi install
   redis:
-    host: hebe-db.cok6p3wjd2e5.ap-northeast-2.rds.amazonaws.com
+    host: ec2-15-164-202-112.ap-northeast-2.compute.amazonaws.com
     port: 6379
 
 mybatis:
@@ -79,3 +79,15 @@ mybatis:
 
 server:
   port: 8080
+
+cloud:
+  aws:
+    credentials:
+      accessKey: AKIAXJCTAAUDILUQ2MRI
+      secretKey: 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
+    s3:
+      bucket: hebe-bucket
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false

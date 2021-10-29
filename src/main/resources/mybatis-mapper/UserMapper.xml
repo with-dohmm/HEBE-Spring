@@ -4,7 +4,7 @@
 <mapper namespace="com.hebe.jwt.mapper.UserMapper">
     <select id="selUsername" resultType="int">
         SELECT COUNT(*) FROM userdb
-        WHERE username = #{username}
+        WHERE username = #{username} AND provider = 'HEBE'
     </select>
 
     <select id="selNickname" resultType="int">
@@ -18,4 +18,18 @@
         <if test="profileimg != null">, profileimg = #{profileimg}</if>
         WHERE iuser = ${iuser}
     </update>
+
+    <select id="selNameProvider" resultType="com.hebe.jwt.model.UserEntity">
+        SELECT * FROM userdb
+        WHERE username = #{username} AND provider = #{provider}
+    </select>
+
+    <select id="selUserPw" resultType="String">
+        SELECT password FROM userdb
+        WHERE iuser = ${iuser}
+    </select>
+
+    <delete id="delUser">
+        DELETE FROM userdb WHERE iuser = ${iuser};
+    </delete>
 </mapper>

@@ -42,22 +42,22 @@
         where iuser = #{iuser}
     </select>
 
-    <insert id="preWriteDiary">
-        insert into diarydb
-            (title, content, iuser)
-        values
-            (#{title}, #{content}, #{iuser});
-    </insert>
-
     <select id="getMostRecent" resultType="DiaryEntity">
         select * from diarydb ORDER BY iboard DESC LIMIT 1;
     </select>
 
-    <update id="writeDiary">
+    <update id="updateDiary">
         update diarydb
         set iuser = #{iuser}, title = #{title}, content = #{content}, thumbnail = #{thumbnail}
         where iboard = #{iboard}
     </update>
+
+    <insert id="writeDiary">
+        insert into diarydb
+            (iuser, title, content, thumbnail)
+        values
+            (#{iuser}, #{title}, #{content}, #{thumbnail})
+    </insert>
 
     <delete id="deleteDiary">
         delete from diarydb

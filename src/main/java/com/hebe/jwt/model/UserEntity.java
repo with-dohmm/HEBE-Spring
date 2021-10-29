@@ -19,7 +19,7 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int iuser;
 
-    @Column(length = 50, unique = true, nullable = false)
+    @Column(length = 50, nullable = false)
     private String username;
 
     @Column(length = 100, nullable = false)
@@ -28,11 +28,12 @@ public class UserEntity {
     @Column(length = 10, unique = true, nullable = false)
     private String nickname;
 
+    @Column(length = 100, nullable = false)
     private String profileimg;
 
-    @Column(length = 100)
+    @Column(length = 100, nullable = false)
     private String introduction;
 
-    @Column
+    @Column(length = 10, nullable = false)
     private String provider;
 }

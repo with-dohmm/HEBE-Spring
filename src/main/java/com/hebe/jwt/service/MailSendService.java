@@ -15,12 +15,11 @@ import java.util.UUID;
 public class MailSendService {
 
     @Autowired
-    private JavaMailSender mailSender;
+    final private JavaMailSender mailSender;
 
     public String createAuth() {
         String uuid = UUID.randomUUID().toString().toUpperCase();
-        String authKey = uuid.substring(uuid.length() - 6, uuid.length());
-        return authKey;
+        return uuid.substring(uuid.length() - 6);
     }
 
     public String mailText(String authKey) {

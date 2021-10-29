@@ -1,5 +1,6 @@
 package com.hebe.controller;
 
+import com.hebe.imgUpload.ImageManagerService;
 import com.hebe.jwt.model.UserEntity;
 import com.hebe.service.DiaryService;
 import com.hebe.vo.*;
@@ -18,12 +19,13 @@ public class DiaryController {
     @Autowired
     private DiaryService DiaryService;
 
+    @Autowired
+    private ImageManagerService ImageManagerService;
+
     // 특정 유저 게시글 조회
     @PostMapping("/diary")
     public List<CardDomain> selUserDiary(UserEntity param) {
-        System.out.println("/diary 작동");
         List<CardDomain> list = DiaryService.selUserDiary(param);
-        System.out.println(list);
         return list;
     }
 
@@ -42,20 +44,16 @@ public class DiaryController {
         return userInfo;
     }
 
-    // 글쓰기 버튼 클릭 시 임의의 글 생성 (이미지 폴더 담아두기용)
-    @PostMapping("/preWrite")
-    public int preWriteDiary(DiaryEntity param) {
-        return DiaryService.preWriteDiary(param);
-    }
-
     // 최신 글 iboard 가져오기
     @PostMapping("/diary/recent")
     public int getRecentIboard() { return DiaryService.getRecentIboard(); }
 
     // 이미지 업로드
     @PostMapping("/diaryImg")
-    public String uploadImage(MultipartFile img, int iboard, int iuser) {
-        return DiaryService.uploadImage(img, iboard, iuser); }
+    public String uploadImage(MultipartFile img, int iboard, int iuser) { // 기존엔 String 타입
+        String filePath = "img/" + iuser + "/" + iboard;
+        return ImageManagerService.createAndUploadFile(img, filePath);
+    }
 
     // 글 작성
     @PostMapping("/write")
@@ -72,13 +70,27 @@ public class DiaryController {
         return DiaryService.cancelDiary(param);
     }
 
+    // 글 수정
+    @PostMapping("/update")
+    public int updateDiary(DiaryEntity param) {
+        System.out.println("/api/update 작동");
+        // 수정할 때 기존에 있던 이미지 삭제 시 s3에서 이미지 삭제
+
+        return DiaryService.updateDiary(param);
+    }
+
     // detail 조회
     @PostMapping("/detail")
     public DetailDomain detailDiary(DiaryEntity param) { return DiaryService.detailDiary(param); }
 
     // 글 삭제
     @PostMapping("/delete")
-    public int deleteDiary(DiaryEntity param) { return DiaryService.deleteDiary(param); }
+    public int deleteDiary(DiaryEntity param) {
+        String filePath = "img/" + param.getIuser() + "/" + param.getIboard();
+        ImageManagerService.deleteFile(filePath);   // 글 삭제 시 s3에 이미지 삭제
+
+        return DiaryService.deleteDiary(param);
+    }
 
     // 댓글 리스트 조회
     @PostMapping("/cmt/list")
