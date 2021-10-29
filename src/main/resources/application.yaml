@@ -91,3 +91,6 @@ cloud:
       static: ap-northeast-2
     stack:
       auto: false
+    ses:
+      access-key: AKIAXJCTAAUDK6APRWOW
+      secret-key: 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
