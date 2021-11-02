@@ -92,5 +92,5 @@ cloud:
     stack:
       auto: false
     ses:
-      access-key: AKIAXJCTAAUDK6APRWOW
-      secret-key: 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
+      access-key: // accessKey
+      secret-key: // secretKey
