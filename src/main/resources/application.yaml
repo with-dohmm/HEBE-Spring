@@ -1,14 +1,14 @@
 spring:
   datasource:
-    url: jdbc:mariadb://hebe-db.cok6p3wjd2e5.ap-northeast-2.rds.amazonaws.com:3306/hebe
+    url: 
     username: admin
-    password: sweetgirl3!
+    password: !
     driver-class-name: org.mariadb.jdbc.Driver
   mail:
     host: smtp.gmail.com
     port: 587
     username: hebenote.com@gmail.com
-    password: sweetgirl3~
+    password: 
     properties:
       mail:
         smtp:
@@ -20,23 +20,23 @@ spring:
       client:
         registration:
           google:
-            client-id: 1032001853934-78dmac7kurqos5r8bpvs9hen0afa8bgv.apps.googleusercontent.com
-            client-secret: oPRqiNcXKA9nUfMxMRYkLRe7
+            client-id: 
+            client-secret: 
             scope: email, profile
 
           kakao:
             authorization-grant-type: authorization_code
-            client-id: b3666ac61e5a48bc4b86aa650b2c89e8 # rest API
-            client-secret: mweaQa1voV0VvYAtHEKYMrNTsWSS7dVV
+            client-id: 
+            client-secret: 
             redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
             scope: profile_image, account_email
             client-authentication-method: POST
             client-name: Kakao
 
           naver:
-            authorization-grant-type: authorization_code
-            client-id: Wt7w44Bz35znrEJBbnnN # Client ID
-            client-secret: wxcaH5K72R
+            authorization-grant-type: 
+            client-id: 
+            client-secret: 
             redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
             scope:
               - name
@@ -70,7 +70,7 @@ spring:
   # https://github.com/microsoftarchive/redis/releases/tag/win-3.2.100
   # Redis-x64-3.2.100.msi install
   redis:
-    host: ec2-15-164-202-112.ap-northeast-2.compute.amazonaws.com
+    host: 
     port: 6379
 
 mybatis:
@@ -83,8 +83,8 @@ server:
 cloud:
   aws:
     credentials:
-      accessKey: AKIAXJCTAAUDILUQ2MRI
-      secretKey: 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
+      accessKey: 
+      secretKey: 
     s3:
       bucket: hebe-bucket
     region:
@@ -92,5 +92,5 @@ cloud:
     stack:
       auto: false
     ses:
-      access-key: AKIAXJCTAAUDK6APRWOW
-      secret-key: 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
+      access-key: 
+      secret-key: 
