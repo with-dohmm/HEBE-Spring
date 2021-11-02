@@ -2,15 +2,12 @@ package com.hebe.jwt.controller;
 
 import com.hebe.jwt.model.UserDTO;
 import com.hebe.jwt.model.UserEntity;
-import com.hebe.jwt.service.AmazonSESSample;
 import com.hebe.jwt.service.UserService;
 import com.hebe.jwt.service.MailSendService;
 import com.hebe.jwt.util.CookieUtil;
 import com.hebe.jwt.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,14 +21,14 @@ public class UserController {
     @Autowired private UserService userService;
     @Autowired private CookieUtil cookieUtil;
     @Autowired private MailSendService mailSendService;
-    @Autowired private AmazonSESSample amazonSESSample;
+    //@Autowired private AmazonSESSample amazonSESSample;
 
     @PostMapping("/joinAuth")
     public String joinAuth(@RequestBody UserDTO param) {
         int result = userService.selUsername(param.getUsername());
         if(result == 0) {
-            //return mailSendService.sendMail(param.getUsername());
-            return amazonSESSample.sesMail(param.getUsername());
+            return mailSendService.sendMail(param.getUsername());
+            //return amazonSESSample.sesMail(param.getUsername());
         }
         return Integer.toString(result);
     }
