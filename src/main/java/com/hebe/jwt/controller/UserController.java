@@ -21,14 +21,12 @@ public class UserController {
     @Autowired private UserService userService;
     @Autowired private CookieUtil cookieUtil;
     @Autowired private MailSendService mailSendService;
-    //@Autowired private AmazonSESSample amazonSESSample;
 
     @PostMapping("/joinAuth")
     public String joinAuth(@RequestBody UserDTO param) {
         int result = userService.selUsername(param.getUsername());
         if(result == 0) {
             return mailSendService.sendMail(param.getUsername());
-            //return amazonSESSample.sesMail(param.getUsername());
         }
         return Integer.toString(result);
     }
