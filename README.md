@@ -11,7 +11,7 @@ HEBE는 하루하루 할일을 메모,체크할 수 있는 TodoList, 유저의 �
 ## 주요 기능
  * 회원가입 , 로그인
    * 회원가입시 해당 이메일로 인증메일 발송 확인 후 회원가입 가능
-   * 구글 , 카카오톡 , 네이버 로그인 가능
+   * 구글 , 카카오톡 로그인 가능
  * 개인 다이어리 , TodoList 작성기능 ( 다이어리와 , TodoList 기록이 있다면 달력에 표시 )
  * 좋아요기능
  * 댓글작성기능
@@ -36,10 +36,8 @@ HEBE는 하루하루 할일을 메모,체크할 수 있는 TodoList, 유저의 �
    * 닉네임 변경, 한줄 소개 변경
    * 회원탈퇴기능
 ## 수정/진행 중
- * 소셜 로그인
  * to do list
  * 게시판 이미지 업로드
- * security
 ## 사용 기술
 ### Front-end
 ![htmlcssjs](https://user-images.githubusercontent.com/81272630/137304652-6f43a8d6-16f9-41e9-9960-a2afd578d55f.png)<img src=https://user-images.githubusercontent.com/81272630/137304665-bb6dbe37-96f0-476c-82d8-3b5f2475aabf.png width="275" height="183">
